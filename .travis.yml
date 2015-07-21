@@ -1,0 +1,13 @@
+language: c
+
+before_install:
+  - sudo apt-get install build-essential lua5.1 freeglut3-dev libglew-dev libglu1-mesa-dev libxmu-dev libxi-dev libxxf86vm-dev luarocks -y
+  - git clone https://github.com/Olivine-Labs/busted
+  - sudo luarocks install busted
+  - sudo luarocks install luacov-coveralls
+
+script:
+  - make test
+
+after_success:
+  - make test-cov
