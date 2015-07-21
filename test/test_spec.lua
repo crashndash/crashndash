@@ -1,0 +1,6 @@
+require 'busted.runner'()
+describe('a test', function()
+  it('should pass', function()
+    assert.is_true(1 == 1)
+  end)
+end)

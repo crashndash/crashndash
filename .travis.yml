@@ -5,9 +5,13 @@ before_install:
   - git clone https://github.com/Olivine-Labs/busted
   - sudo luarocks install busted
   - sudo luarocks install luacov-coveralls
+  # Oh, the hacks.
+  - cp `which busted` test_runner
+  - sed -i -e 's/-lluarocks.loader //g' test_runner
+  - sed -i -e 's/\/usr\/bin\/lua/\.\/ci\/moai_linux/g' test_runner
 
 script:
-  - make test
+  - ./test_runner test
 
 after_success:
   - make test-cov
