@@ -58,10 +58,10 @@ math.random ( 9999 )
 
 globalData = {}
 -- For server. Needs to be a float.
-GAME_VERSION = 1.6
+GAME_VERSION = 1.7
 -- Build version. Used in the "credits screen."
-BUILD_VERSION = "1.6.3"
-
+BUILD_VERSION = "1.7.0"
+print("Crash n Dash, open source version. Build version " .. BUILD_VERSION)
 MOAIUntzSystem.initialize ()
 MOAIUntzSystem.setVolume(0.5)
 
