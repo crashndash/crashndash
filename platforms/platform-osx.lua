@@ -8,7 +8,9 @@ if MOAIEnvironment.osBrand == 'OSX' then
   DEBUGDATA = true
 end
 
-if SCREEN_HEIGHT == nil then SCREEN_HEIGHT = 480 end
+if SCREEN_HEIGHT == nil then
+  SCREEN_HEIGHT = 480
+end
 
 SCREEN_UNITS_X = 320
 SCREEN_UNITS_Y = 480
