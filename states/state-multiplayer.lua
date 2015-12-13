@@ -65,14 +65,17 @@ local makeConnectMenu = function(layer)
   end)
   menu.setButtonText ( button1, "Enter room number" )
 
-  -- Add button to show best players.
-  local lbButton = menu.makeButton(menu.MENUPOS5)
-  menu.setButtonCallback(lbButton, function (  )
-    Gamecenter.showLeaderboard()
-  end)
-  menu.setButtonText(lbButton, "Show top players")
-
-  menu.new ( layer, { lbButton, button1, unpack(buttonlist) } )
+  if not MOAIGameCenterIOS then
+    -- Add button to show best players.
+    local lbButton = menu.makeButton(menu.MENUPOS5)
+    menu.setButtonCallback(lbButton, function (  )
+      Gamecenter.showLeaderboard()
+    end)
+    menu.setButtonText(lbButton, "Show top players")
+    menu.new ( layer, { lbButton, button1, unpack(buttonlist) } )
+  else
+    menu.new ( layer, { button1, unpack(buttonlist) } )
+  end
 end
 
 multiplayer_state.onLoad = function ( self )
@@ -143,14 +146,16 @@ multiplayer_state.onLoad = function ( self )
   menu.new(multiplayer_state.layer, {})
 
   -- Try to connect to the platform gamecenter.
-  Gamecenter.connect(function()
-    globalData.config.hasAskedGameCenter = true
-    config:saveGame()
-    if type(myCars) == "number" then
-      -- Save in the super cloud what we are doing.
-      Gamecenter.reportScore(myCars)
-    end
-  end)
+  if not MOAIGameCenterIOS then
+    Gamecenter.connect(function()
+      globalData.config.hasAskedGameCenter = true
+      config:saveGame()
+      if type(myCars) == "number" then
+        -- Save in the super cloud what we are doing.
+        Gamecenter.reportScore(myCars)
+      end
+    end)
+  end
 
   -- See if person has a "generated" name.
   if globalData.config.hasAskedGameCenter and string.match(multiplayer.name, "player") then
