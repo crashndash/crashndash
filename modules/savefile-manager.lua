@@ -71,7 +71,14 @@ function makeSaveFile ( filename )
     local serializer = MOAISerializer.new ()
 
     self.fileexist = true
-    local gamestateStr = serializer.serializeToString (self.data)
+    local gamestateStr
+    -- 1.5 and 1.6 polyfill (ref http://getmoai.com/forums/moaiserializer-serialize-missing-in-1-6-t3147/)
+    if serializer.serialize then
+      serializer:serialize ( self.data )
+      gamestateStr = serializer:exportToString ()
+    else
+      gamestateStr = serializer.serializeToString (self.data)
+    end
 
     if not DEVICE then
       local file = io.open ( fullFileName, 'wb' )
